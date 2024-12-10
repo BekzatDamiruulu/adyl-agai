@@ -21,7 +21,7 @@ export function Shop() {
   const [soledDate, setSoledDate] = useState<SoledDates | null>(null);
   useEffect(() => {
     setLoadingCategories(true);
-    axios.get("http://localhost:5089/shop/categories").then((r) => {
+    axios.get("http://192.168.43.255/shop/categories").then((r) => {
       if (r.status == 200) {
         setCategories(r.data);
         setLoadingCategories(false);
@@ -32,7 +32,7 @@ export function Shop() {
   console.log(soledDate);
   useEffect(() => {
     axios
-      .get("http://localhost:5089/shop/soled-dates?categoryId=" + categoryId)
+      .get("http://192.168.43.255/shop/soled-dates?categoryId=" + categoryId)
       .then((r) => {
         if (r.status == 200) {
           console.log(r.data);
@@ -46,7 +46,7 @@ export function Shop() {
       });
     if (showAllProducts) {
       axios
-        .get("http://localhost:5089/shop/products?categoryId=" + categoryId)
+        .get("http://192.168.43.255/shop/products?categoryId=" + categoryId)
         .then((r) => {
           if (r.status == 200) {
             setProducts(r.data);
@@ -55,7 +55,7 @@ export function Shop() {
     } else {
       axios
         .get(
-          `http://localhost:5089/shop/soled-products?startDate=${soledDate?.startDate}&endDate=${soledDate?.endDate}&categoryId=${categoryId}`
+          `http://192.168.43.255/shop/soled-products?startDate=${soledDate?.startDate}&endDate=${soledDate?.endDate}&categoryId=${categoryId}`
         )
         .then((r) => {
           console.log(r.data);
@@ -70,7 +70,7 @@ export function Shop() {
     if (soledDate && !showAllProducts) {
       axios
         .get(
-          `http://localhost:5089/shop/soled-products?startDate=${soledDate?.startDate}&endDate=${soledDate?.endDate}&categoryId=${categoryId}`
+          `http://192.168.43.255/shop/soled-products?startDate=${soledDate?.startDate}&endDate=${soledDate?.endDate}&categoryId=${categoryId}`
         )
         .then((r) => {
           if (r.status == 200) {
@@ -113,7 +113,7 @@ export function Shop() {
       setIsModalOpen(false);
     }, 300);
     axios
-      .post(`http://localhost:5089/shop/product?categoryId=${categoryId}`, {
+      .post(`http://192.168.43.255:80/shop/product?categoryId=${categoryId}`, {
         name: pname,
         price: price,
         imageUrl: imageUrl,
@@ -132,8 +132,9 @@ export function Shop() {
   };
 
   const [modal, setModal] = useState(false);
-
-  const showModal2 = () => {
+  const [sPro, setSPro] = useState(0);
+  const showModal2 = (pid: number) => {
+    setSPro(pid);
     setModal(true);
   };
   const [count, setCount] = useState(0);
@@ -141,17 +142,18 @@ export function Shop() {
     setModal(false);
   };
 
-  const handleOk2 = (productId: number) => {
+  const handleOk2 = () => {
     setTimeout(() => {
       setModal(false);
     }, 300);
     axios
       .post(
-        `http://localhost:5089/shop/soled-product?productId=${productId}&quantity=${count}`
+        `http://192.168.43.255/shop/soled-product?productId=${sPro}&quantity=${count}`
       )
       .then((r) => {
         console.log(r);
         alert("продано");
+        setCount(0);
       });
   };
   return (
@@ -217,14 +219,14 @@ export function Shop() {
               <Button
                 style={{ marginTop: 8 }}
                 type="primary"
-                onClick={showModal2}
+                onClick={() => showModal2(p.id)}
               >
                 Продать
               </Button>
               <Modal
                 title="Продать"
                 open={modal}
-                onOk={() => handleOk2(p.id)}
+                onOk={handleOk2}
                 onCancel={handleCancel2}
               >
                 <label htmlFor="count">
