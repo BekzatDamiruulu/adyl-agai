@@ -1,15 +1,9 @@
 import "./App.css";
-import Task1 from "./task1";
 
-import React from "react";
-import { Layout, Menu, theme } from "antd";
+import { Layout, theme } from "antd";
+import { Shop } from "./shop";
 
 const { Header, Content, Footer } = Layout;
-
-const items = new Array(3).fill(null).map((_, index) => ({
-  key: index + 1,
-  label: `nav ${index + 1}`,
-}));
 
 function App() {
   const {
@@ -21,13 +15,6 @@ function App() {
       <Layout>
         <Header style={{ display: "flex", alignItems: "center" }}>
           <div className="demo-logo" />
-          {/* <Menu
-            theme="dark"
-            mode="horizontal"
-            defaultSelectedKeys={["2"]}
-            items={items}
-            style={{ flex: 1, minWidth: 0 }}
-          /> */}
         </Header>
         <Content style={{ padding: "0 48px" }}>
           {/* <Breadcrumb style={{ margin: "16px 0" }}>
@@ -41,7 +28,7 @@ function App() {
               borderRadius: borderRadiusLG,
             }}
           >
-            <Task1 />
+            <Shop />
           </div>
         </Content>
         <Footer style={{ textAlign: "center" }}>

@@ -266,8 +266,10 @@ const examData: DataType[] = [
 ];
 
 const Task1: React.FC = function () {
-  const [students, setStudents] = useState<DataType[]>(data);
-  const [count, setC] = useState(3);
+  const [students, setStudents] = useState<DataType[]>(
+    data.sort((a, b) => b.bio - a.bio)
+  );
+  const [count, setC] = useState(0);
   const [all, setAll] = useState(false);
   function getClass(s: Exclude<keyof DataType, "fullname" | "key"> = "fiz") {
     return subject == s ? "red" : "";
@@ -303,7 +305,7 @@ const Task1: React.FC = function () {
               labelRender={(v) =>
                 v.value == 0 ? <b>Баары</b> : <b>алдынкы {v.value} студент</b>
               }
-              defaultValue={3}
+              defaultValue={0}
               style={{ width: 190 }}
               onChange={(value: number) => {
                 if (all) {
@@ -331,7 +333,7 @@ const Task1: React.FC = function () {
               ]}
             />
             <Select
-              defaultValue="fiz"
+              defaultValue="bio"
               style={{ width: 190 }}
               onChange={(value: string) => {
                 if (value == "total") {

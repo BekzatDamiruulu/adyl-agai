@@ -1,3 +1,12 @@
 .red {
   background-color: rgb(174, 224, 255);
 }
+
+.total {
+  text-align: center;
+  padding: 0 !important;
+  font-weight: 700;
+  background-color: rgb(174, 202, 255);
+
+  height: 100%;
+}
